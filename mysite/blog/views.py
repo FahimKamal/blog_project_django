@@ -26,6 +26,7 @@ class PostDetailView(DetailView):
 
 
 class CreatePostView(LoginRequiredMixin, CreateView):
+    fields = ('author', 'title', 'text')
     login_url = '/login/'
     redirect_field_name = 'blog/post_detail.html'
     from_class = PostForm
@@ -33,6 +34,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
+    fields = ('author', 'title', 'text')
     login_url = '/login/'
     redirect_field_name = 'blog/post_detail.html'
     from_class = PostForm
@@ -53,7 +55,7 @@ class DraftListView(LoginRequiredMixin, ListView):
         return Post.objects.filter(published_date__isnull=True).order_by('create_date')
 
 
-@login_required
+# @login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
